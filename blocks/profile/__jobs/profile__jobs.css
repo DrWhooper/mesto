@@ -1,9 +1,14 @@
 .profile__jobs {
   max-width: 282px;
   color: white;
-  margin: 0;
   font-size: 18px;
   margin: 5px 0 0;
+}
+
+@media screen and (max-width: 950px) {
+  .profile__jobs {
+    margin: 5px auto 0;
+  }
 }
 
 @media screen and (max-width: 530px) {
