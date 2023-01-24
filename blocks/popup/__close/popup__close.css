@@ -1,7 +1,7 @@
 .popup__close {
     position: absolute;
     display: block;
-    background: transparent url(../../../images/Close_Icon.png) no-repeat 50%;
+    background: transparent url(../../../images/Close_Icon.svg) no-repeat 50%;
     min-width: 32px;
     min-height: 32px;
     top: -41px;
@@ -20,7 +20,7 @@
 
 @media screen and (max-width: 670px) {
     .popup__close {
-        background: transparent url(../../../images/Close_Icon_min.png) no-repeat 50%;
+        background: transparent url(../../../images/Close_Icon_m.svg) no-repeat 50%;
         min-width: 20px;
         min-height: 20px;
         top: -36px;

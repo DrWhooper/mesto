@@ -1,7 +1,7 @@
-.element__button-like {
+.article__button-like {
   display: block;
   position: absolute;
-  background-image: url(../../../../images/Group.svg);
+  background-image: url(../../../images/Group.svg);
   outline: none;
   border: none;
   width: 22px;
@@ -14,6 +14,6 @@
   transition: opacity 0.3s;
 }
 
-.element__button-like:hover {
+.article__button-like:hover {
   opacity: 0.5;
 }
