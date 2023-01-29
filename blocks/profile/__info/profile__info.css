@@ -1,5 +1,5 @@
 .profile__info {
-  max-width: 60%;
+  max-width: calc(100% - 300px);
   display: flex;
   flex-direction: column;
 }
@@ -10,3 +10,4 @@
     margin: 0 auto;
   }
 }
+
