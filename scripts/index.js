@@ -11,9 +11,8 @@ let formElement = document.querySelector('.popup__form');
 let nameInput = formElement.querySelector('.popup__input_user_name');
 let jobInput = formElement.querySelector('.popup__input_user_jobs');
 
-let photoPopupElement = document.querySelector('.popup_add_photo')
-let namePhoto = photoPopupElement.querySelector('.popup__input_card_name')
-let srcPhoto = photoPopupElement.querySelector('.popup__input_card_img')
+let namePhoto = popupAddPhoto.querySelector('.popup__input_card_name')
+let srcPhoto = popupAddPhoto.querySelector('.popup__input_card_img')
 
 let profileName = document.querySelector('.profile__name');
 let profileJobs = document.querySelector('.profile__jobs');
