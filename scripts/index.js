@@ -102,7 +102,7 @@ const cardFromCreat = (evt) => {
   srcPhoto.value = ''
 }
 
-photoPopupElement.addEventListener('submit', cardFromCreat);
+popupAddPhoto.addEventListener('submit', cardFromCreat);
 
 const cardCreat = (cardsName, cardsImg) => {
   const cardsElem = cardsTample.querySelector('.article').cloneNode(true);
