@@ -1,8 +1,8 @@
 let editButton = document.querySelector('.profile__edit-button');
 let popupFrom = document.querySelectorAll('.popup')
-let popupOpen = document.querySelector('.popup__edit');
+let popupOpen = document.querySelector('.popup_edit_name');
 let addPhotoButton = document.querySelector('.profile__add-button')
-let popupAddPhoto = document.querySelector('.popup__add-photo')
+let popupAddPhoto = document.querySelector('.popup_add_photo')
 let popupBtn = document.querySelector('.popup__btn');
 let elementsCard = document.querySelector('.elements');
 let closeBtn = document.querySelectorAll('.popup__close');
@@ -11,7 +11,7 @@ let formElement = document.querySelector('.popup__form');
 let nameInput = formElement.querySelector('.popup__input_user_name');
 let jobInput = formElement.querySelector('.popup__input_user_jobs');
 
-let photoPopupElement = document.querySelector('.popup__add-photo')
+let photoPopupElement = document.querySelector('.popup_add_photo')
 let namePhoto = photoPopupElement.querySelector('.popup__input_card_name')
 let srcPhoto = photoPopupElement.querySelector('.popup__input_card_img')
 
@@ -141,7 +141,7 @@ const renderCards = (cardsName, cardsImg) => {
   })
 
   function zoomInPhoto() {
-    const photoCard = document.querySelector('.popup__img-zoom');
+    const photoCard = document.querySelector('.popup_img_zoom');
     photoCard.querySelector('.popup__img').src = cardsImg
     photoCard.querySelector('.popup__title-img').textContent = cardsName
     photoCard.classList.add('popup_opened')
