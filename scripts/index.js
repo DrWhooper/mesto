@@ -24,6 +24,11 @@ function showEditPopup() {
   jobInput.value = profileJobs.textContent;
 }
 
+function showAddPhotoPopup() {
+  openPopup(popupAddPhotoCard);
+  fieldResetAddPhotoPopup.reset();
+}
+
 function openPopup(popup) {
   popup.classList.add('popup_opened')
 }
@@ -46,14 +51,11 @@ buttonsClosePopup.forEach(closeButton => {
 
 function closeButtonClick(evt) {
   const evtTarget = evt.target.closest('.popup')
-  evtTarget.classList.remove('popup_opened')
-  if (evtTarget.className == 'popup popup_add_photo') {
-    fieldResetAddPhotoPopup.reset()
-  }
+  closePopup(evtTarget)
 }
 
 buttonOpenEditProfilePopup.addEventListener('click', showEditPopup);
-photoAddButtonCard.addEventListener('click', () => openPopup(popupAddPhotoCard))
+photoAddButtonCard.addEventListener('click', showAddPhotoPopup)
 formCard.addEventListener('submit', submitEditProfileForm);
 
 
@@ -65,7 +67,6 @@ const submitAddCardForm = (evt) => {
   const cardsImg = srcPhoto.value; 
   renderCards(cardsName, cardsImg);
   closePopup(popupAddPhotoCard)
-  fieldResetAddPhotoPopup.reset()
 }
 
 popupAddPhotoCard.addEventListener('submit', submitAddCardForm);
