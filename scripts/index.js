@@ -3,7 +3,8 @@ const popupFrom = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector('.popup_edit_name');
 const photoAddButtonCard = document.querySelector('.profile__add-button')
 const popupAddPhotoCard = document.querySelector('.popup_add_photo')
-const popupBtnSubmit = document.querySelector('.popup__btn');
+const popupBtnSubmit = document.querySelector('.popup__button');
+const popupBtnSubmitDisabled = document.querySelector('.popup__button_type_disabled')
 const elementsCard = document.querySelector('.elements');
 const buttonsClosePopup = document.querySelectorAll('.popup__close');
 const formCard = document.querySelector('.popup__form');
@@ -18,15 +19,40 @@ const cardInZoom = document.querySelector('.popup_img_zoom');
 const photoCardInZoom = cardInZoom.querySelector('.popup__img');
 const titleCardInZoom = cardInZoom.querySelector('.popup__title-img');
 
+function closeClickElement(popup) {
+  popupFrom.forEach((element) => {
+    element.addEventListener('click', (evt) => {
+      const click = evt.target
+      if (click.classList.contains('popup')) {
+        closePopup(popup)
+      }
+    })
+  })
+}
+
+function closeEscElement(element) {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(element)
+    }
+  })
+}
+
 function showEditPopup() {
   openPopup(popupEditProfile)
   nameInput.value = profileName.textContent;
   jobInput.value = profileJobs.textContent;
+  closeEscElement(popupEditProfile)
+  closeClickElement(popupEditProfile)
 }
 
 function showAddPhotoPopup() {
   openPopup(popupAddPhotoCard);
   fieldResetAddPhotoPopup.reset();
+  popupBtnSubmitDisabled.setAttribute('disabled', 'disabled')
+  popupBtnSubmitDisabled.classList.add(formValidationConfig.inactiveButtonClass)
+  closeEscElement(popupAddPhotoCard)
+  closeClickElement(popupAddPhotoCard)
 }
 
 function openPopup(popup) {
@@ -102,6 +128,8 @@ const createCard = (cardsName, cardsImg) => {
     titleCardInZoom.textContent = cardsName
     photoCardInZoom.alt = cardsName;
     openPopup(cardInZoom)
+    closeEscElement(cardInZoom)
+    closeClickElement(cardInZoom)
   }
   
   return cardsElem;   
@@ -116,3 +144,4 @@ initialCards.forEach((card) => {
   const cardsImg = card.link;
   renderCards(cardsName, cardsImg)
 })
+
