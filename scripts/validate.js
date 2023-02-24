@@ -19,8 +19,8 @@ function errorInput(input, config) {
 }
 
 function addInputListener(form, config) {
-  const inputField = form.querySelectorAll(config.inputSelector)
-  inputField.forEach(itemElement => {
+  const inputFields = form.querySelectorAll(config.inputSelector)
+  inputFields.forEach(itemElement => {
     itemElement.addEventListener('input', (evt) => {
       const evtInput = evt.target
       errorInput(evtInput, config)
@@ -29,16 +29,25 @@ function addInputListener(form, config) {
 }
 
 function toggleButtonPopup(form, config) {
-  const buttonPopup = form.querySelector(config.submitButtonSelector)
+  const submitButton = form.querySelector(config.submitButtonSelector)
   const isFormValid = form.checkValidity();
-  buttonPopup.disabled = !isFormValid
-  buttonPopup.classList.toggle(config.inactiveButtonClass, !isFormValid)
+  submitButton.disabled = !isFormValid
+  submitButton.classList.toggle(config.inactiveButtonClass, !isFormValid)
+}
+
+function deactivationSubmitButton(form, config) {
+  form.addEventListener('reset', () => {
+    setTimeout(() => {
+      toggleButtonPopup(form, config)
+    }, 0);
+  });
 }
 
 function enableValidation(config) {
-  const popupForm = Array.from(document.querySelectorAll(config.formSelector))
-  popupForm.forEach(form => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach(form => {
     toggleButtonPopup(form, config)
+    deactivationSubmitButton(form, config)
     addInputListener(form, config)
     form.addEventListener('input', () => {
       toggleButtonPopup(form, config)

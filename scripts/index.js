@@ -1,16 +1,16 @@
 const buttonOpenEditProfilePopup = document.querySelector('.profile__edit-button');
-const popupFrom = document.querySelectorAll('.popup')
+const popups = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector('.popup_edit_name');
 const photoAddButtonCard = document.querySelector('.profile__add-button')
 const popupAddPhotoCard = document.querySelector('.popup_add_photo')
 const popupBtnSubmit = document.querySelector('.popup__button');
 const popupBtnSubmitDisabled = document.querySelector('.popup__button_type_disabled')
 const elementsCard = document.querySelector('.elements');
-const buttonsClosePopup = document.querySelectorAll('.popup__close');
-const formCard = document.querySelector('.popup__form');
+const closeButtons = document.querySelectorAll('.popup__close');
+const profileForm = document.querySelector('.popup__form');
 const fieldResetAddPhotoPopup = document.querySelector('.popup__form_clear_field')
-const nameInput = formCard.querySelector('.popup__input_user_name');
-const jobInput = formCard.querySelector('.popup__input_user_jobs');
+const nameInput = profileForm.querySelector('.popup__input_user_name');
+const jobInput = profileForm.querySelector('.popup__input_user_jobs');
 const namePhoto = popupAddPhotoCard.querySelector('.popup__input_card_name')
 const srcPhoto = popupAddPhotoCard.querySelector('.popup__input_card_img')
 const profileName = document.querySelector('.profile__name');
@@ -19,48 +19,44 @@ const cardInZoom = document.querySelector('.popup_img_zoom');
 const photoCardInZoom = cardInZoom.querySelector('.popup__img');
 const titleCardInZoom = cardInZoom.querySelector('.popup__title-img');
 
-function closeClickElement(popup) {
-  popupFrom.forEach((element) => {
+function closeClickElement() {
+  popups.forEach((element) => {
     element.addEventListener('click', (evt) => {
       const click = evt.target
       if (click.classList.contains('popup')) {
-        closePopup(popup)
+        closePopup(element)
       }
     })
   })
 }
 
-function closeEscElement(element) {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closePopup(element)
-    }
-  })
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup)
+  }
 }
 
 function showEditPopup() {
   openPopup(popupEditProfile)
   nameInput.value = profileName.textContent;
   jobInput.value = profileJobs.textContent;
-  closeEscElement(popupEditProfile)
-  closeClickElement(popupEditProfile)
+  closeClickElement()
 }
 
 function showAddPhotoPopup() {
   openPopup(popupAddPhotoCard);
-  fieldResetAddPhotoPopup.reset();
-  popupBtnSubmitDisabled.setAttribute('disabled', 'disabled')
-  popupBtnSubmitDisabled.classList.add(formValidationConfig.inactiveButtonClass)
-  closeEscElement(popupAddPhotoCard)
-  closeClickElement(popupAddPhotoCard)
+  closeClickElement()
 }
 
 function openPopup(popup) {
   popup.classList.add('popup_opened')
+  document.addEventListener('keydown', closeByEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened')
+  document.removeEventListener('keydown', closeByEscape);
 }
 
 function submitEditProfileForm(evt) {
@@ -71,7 +67,7 @@ function submitEditProfileForm(evt) {
 }
 
 
-buttonsClosePopup.forEach(closeButton => {
+closeButtons.forEach(closeButton => {
   closeButton.addEventListener('click', closeButtonClick)
 })
 
@@ -82,7 +78,7 @@ function closeButtonClick(evt) {
 
 buttonOpenEditProfilePopup.addEventListener('click', showEditPopup);
 photoAddButtonCard.addEventListener('click', showAddPhotoPopup)
-formCard.addEventListener('submit', submitEditProfileForm);
+profileForm.addEventListener('submit', submitEditProfileForm);
 
 
 const cardTemplate = document.querySelector('#atricle-tamplate').content;
@@ -93,6 +89,7 @@ const submitAddCardForm = (evt) => {
   const cardsImg = srcPhoto.value; 
   renderCards(cardsName, cardsImg);
   closePopup(popupAddPhotoCard)
+  fieldResetAddPhotoPopup.reset();
 }
 
 popupAddPhotoCard.addEventListener('submit', submitAddCardForm);
@@ -100,10 +97,12 @@ popupAddPhotoCard.addEventListener('submit', submitAddCardForm);
 const createCard = (cardsName, cardsImg) => {
   const cardsElem = cardTemplate.querySelector('.article').cloneNode(true);
   const cardsNameElement = cardsElem.querySelector('.article__title')
-  const cardsPhotoMesto = cardsElem.querySelector('.article__card-img');
+  const cardsPhotoMesto = cardsElem.querySelectorAll('.article__card-img');
   cardsNameElement.textContent = cardsName;
-  cardsPhotoMesto.src = cardsImg;
-  cardsPhotoMesto.alt = cardsName;
+  cardsPhotoMesto.forEach(element => {
+    element.src = cardsImg;
+    element.alt = cardsName;
+  })
   
   //Удаление элемента 
   const cardsTrash = cardsElem.querySelector('.article__trash')
@@ -118,8 +117,7 @@ const createCard = (cardsName, cardsImg) => {
   })
 
   //Увеличение фото 
-  const cardsPhoto = cardsElem.querySelectorAll('.article__card-img');
-  cardsPhoto.forEach((photoCard) => {
+  cardsPhotoMesto.forEach((photoCard) => {
     photoCard.addEventListener('click', zoomInPhoto)
   })
   
@@ -128,8 +126,7 @@ const createCard = (cardsName, cardsImg) => {
     titleCardInZoom.textContent = cardsName
     photoCardInZoom.alt = cardsName;
     openPopup(cardInZoom)
-    closeEscElement(cardInZoom)
-    closeClickElement(cardInZoom)
+    closeClickElement()
   }
   
   return cardsElem;   
