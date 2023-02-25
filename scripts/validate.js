@@ -7,7 +7,7 @@ const formValidationConfig = {
   errorClass: 'popup__error_visible'
 };
 
-function errorInput(input, config) {
+function toggleInputError(input, config) {
   const errorText = document.querySelector(`#${input.id}-error`)
   if (input.validity.valid){
     input.classList.remove(config.inputErrorClass)
@@ -23,7 +23,7 @@ function addInputListener(form, config) {
   inputFields.forEach(itemElement => {
     itemElement.addEventListener('input', (evt) => {
       const evtInput = evt.target
-      errorInput(evtInput, config)
+      toggleInputError(evtInput, config)
     })
   })
 }
@@ -35,7 +35,7 @@ function toggleButtonPopup(form, config) {
   submitButton.classList.toggle(config.inactiveButtonClass, !isFormValid)
 }
 
-function deactivationSubmitButton(form, config) {
+function setResetHandler(form, config) {
   form.addEventListener('reset', () => {
     setTimeout(() => {
       toggleButtonPopup(form, config)
@@ -47,7 +47,7 @@ function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector))
   formList.forEach(form => {
     toggleButtonPopup(form, config)
-    deactivationSubmitButton(form, config)
+    setResetHandler(form, config)
     addInputListener(form, config)
     form.addEventListener('input', () => {
       toggleButtonPopup(form, config)

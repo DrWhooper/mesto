@@ -30,6 +30,8 @@ function closeClickElement() {
   })
 }
 
+closeClickElement()
+
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened')
@@ -41,12 +43,10 @@ function showEditPopup() {
   openPopup(popupEditProfile)
   nameInput.value = profileName.textContent;
   jobInput.value = profileJobs.textContent;
-  closeClickElement()
 }
 
 function showAddPhotoPopup() {
   openPopup(popupAddPhotoCard);
-  closeClickElement()
 }
 
 function openPopup(popup) {
@@ -97,12 +97,10 @@ popupAddPhotoCard.addEventListener('submit', submitAddCardForm);
 const createCard = (cardsName, cardsImg) => {
   const cardsElem = cardTemplate.querySelector('.article').cloneNode(true);
   const cardsNameElement = cardsElem.querySelector('.article__title')
-  const cardsPhotoMesto = cardsElem.querySelectorAll('.article__card-img');
+  const cardsPhotoMesto = cardsElem.querySelector(".article__card-img");
   cardsNameElement.textContent = cardsName;
-  cardsPhotoMesto.forEach(element => {
-    element.src = cardsImg;
-    element.alt = cardsName;
-  })
+  cardsPhotoMesto.src = cardsImg;
+  cardsPhotoMesto.alt = cardsName;
   
   //Удаление элемента 
   const cardsTrash = cardsElem.querySelector('.article__trash')
@@ -117,16 +115,13 @@ const createCard = (cardsName, cardsImg) => {
   })
 
   //Увеличение фото 
-  cardsPhotoMesto.forEach((photoCard) => {
-    photoCard.addEventListener('click', zoomInPhoto)
-  })
+  cardsPhotoMesto.addEventListener("click", zoomInPhoto);
   
   function zoomInPhoto() {
     photoCardInZoom.src = cardsImg
     titleCardInZoom.textContent = cardsName
     photoCardInZoom.alt = cardsName;
     openPopup(cardInZoom)
-    closeClickElement()
   }
   
   return cardsElem;   
