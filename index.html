@@ -42,7 +42,7 @@
   <section class="popup popup_edit_name">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="popup-form" novalidate>
+      <form class="popup__form popup__form_validate_edit" name="popup-form" novalidate>
         <input class="popup__input popup__input_user_name" id="name-input" type="text" value="Жак-Ив Кусто" placeholder="Имя" name="name" minlength="2" maxlength="40" required>
         <span class="popup__placeholder popup__placeholder_error_name" id="name-input-error"></span>
         <input class="popup__input popup__input_user_jobs" id="job-input" type="text" value="Исследователь океана" placeholder="О себе" name="jobs" minlength="2" maxlength="200" required>
@@ -55,7 +55,7 @@
   <section class="popup popup_add_photo">
     <div class="popup__container">
       <h2 class="popup__title">Новое фото</h2>
-      <form class="popup__form popup__form_clear_field" name="popup-photo" novalidate>
+      <form class="popup__form popup__form_clear_field popup__form_validate_photo" name="popup-photo" novalidate>
         <input class="popup__input popup__input_card_name" type="text" id="card-name" placeholder="Название" name="name" minlength="2" maxlength="30" required>
         <span class="popup__placeholder popup__placeholder_error_name" id="card-name-error"></span>
         <input class="popup__input popup__input_card_img" id="card-img" type="url" placeholder="Ссылка на картинку" name="url" required>
@@ -73,8 +73,8 @@
       <button class="article__trash" type="button"></button>
     </div>
   </template>
-  <script src="./scripts/validate.js"></script>
+  <script src="./scripts/validate.js" type="module"></script>
   <script src="./scripts/constants.js"></script> 
-  <script src="./scripts/index.js"></script>
+  <script src="./scripts/index.js" type="module"></script>
 </body>
 </html>
