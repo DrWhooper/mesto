@@ -1,6 +1,7 @@
 import Card from "./Card.js"
-import FromValidator from "./FormValidator.js";
+import FormValidator from "./FormValidator.js";
 import { formValidationConfig } from "./validate.js";
+import { openPopup, closePopup } from "../utils/utils.js"
 
 const buttonOpenEditProfilePopup = document.querySelector('.profile__edit-button');
 const popups = document.querySelectorAll('.popup')
@@ -36,35 +37,24 @@ function closeClickElement() {
 
 closeClickElement()
 
-function closeByEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened')
-    closePopup(openedPopup)
-  }
+function setValidateForm(popupValidate) {
+  const popupSetValidate = new FormValidator(formValidationConfig, popupValidate)
+  popupSetValidate.enableValidation()
+
 }
+
+setValidateForm(popupValidateEditForm)
+setValidateForm(popupValidatePhotoForm)
 
 function showEditPopup() {
   openPopup(popupEditProfile)
   nameInput.value = profileName.textContent;
   jobInput.value = profileJobs.textContent;
-  const popupEditValidate = new FromValidator(formValidationConfig, popupValidateEditForm)
-  popupEditValidate.enableValidation()
 }
 
 function showAddPhotoPopup() {
   openPopup(popupAddPhotoCard);
-  const popupAddPhotoValidate = new FromValidator(formValidationConfig, popupValidatePhotoForm)
-  popupAddPhotoValidate.enableValidation()
-}
-
-function openPopup(popup) {
-  popup.classList.add('popup_opened')
-  document.addEventListener('keydown', closeByEscape);
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened')
-  document.removeEventListener('keydown', closeByEscape);
+  fieldResetAddPhotoPopup.reset();
 }
 
 function submitEditProfileForm(evt) {
@@ -89,14 +79,18 @@ profileForm.addEventListener('submit', submitEditProfileForm);
 
 const cardTemplate = document.querySelector('#atricle-tamplate').content;
 
+function createCard(name, img) {
+  const card = new Card(cardTemplate, name, img, elementsCard, photoCardInZoom, titleCardInZoom, cardInZoom)
+  renderCards(card)
+}
+
 const submitAddCardForm = (evt) => {
   evt.preventDefault()
   const cardsName = namePhoto.value;
   const cardsImg = srcPhoto.value;
-  const Cards = new Card(cardTemplate, cardsName, cardsImg, cardsImg, photoCardInZoom, titleCardInZoom, cardInZoom)
-  renderCards(Cards)
+  createCard(cardsName, cardsImg)
   closePopup(popupAddPhotoCard)
-  fieldResetAddPhotoPopup.reset();
+  fieldResetAddPhotoPopup.reset(); 
 }
 
 popupAddPhotoCard.addEventListener('submit', submitAddCardForm);
@@ -108,8 +102,7 @@ const renderCards = (Cards) => {
 initialCards.forEach((card) => {
   const cardsName = card.name;
   const cardsImg = card.link;
-  const Cards = new Card(cardTemplate, cardsName, cardsImg, elementsCard, photoCardInZoom, titleCardInZoom, cardInZoom)
-  renderCards(Cards)
+  createCard(cardsName, cardsImg)
 })
 
 export {openPopup}
